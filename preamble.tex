@@ -1,0 +1,631 @@
+% ========
+% Preamble
+% ========
+
+% -----
+% Class
+% -----
+\documentclass{bredelebeamer}
+
+% ------------
+% Slide layout
+% ------------
+\setbeamersize{%
+  text margin left=0.3cm,%
+  text margin right=0.3cm
+}
+%\usepackage{ragged2e}
+
+\usepackage{appendixnumberbeamer}
+
+% List spacing (enumitem is not compatible with beamer)
+% https://jayrobwilliams.com/posts/2019/10/better-beamer
+% https://tex.stackexchange.com/questions/369504#369597
+\makeatletter
+\renewcommand{\itemize}[1][]{%
+  \beamer@ifempty{#1}{}{\def\beamer@defaultospec{#1}}%
+  \ifnum \@itemdepth >2\relax\@toodeep\else
+    \advance\@itemdepth\@ne
+    \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+    \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+    \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+    \list
+    {\usebeamertemplate{itemize \beameritemnestingprefix item}}
+    {\def\makelabel##1{%
+        {%
+          \hss\llap{{%
+              \usebeamerfont*{itemize \beameritemnestingprefix item}%
+              \usebeamercolor[fg]{itemize \beameritemnestingprefix item}##1}}%
+        }%
+      }%
+    }
+  \fi%
+  \setlength\itemsep{\fill}
+  \ifnum \@itemdepth >1
+    \vfill
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\enditemize{\ifhmode\unskip\fi\endlist%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}
+  \ifnum \@itemdepth >1
+  \vfil
+  \fi%
+}
+\makeatother
+
+\makeatletter
+\def\enumerate{%
+  \ifnum\@enumdepth>2\relax\@toodeep
+  \else%
+  \advance\@enumdepth\@ne%
+  \edef\@enumctr{enum\romannumeral\the\@enumdepth}%
+  \advance\@itemdepth\@ne%
+  \fi%
+  \beamer@computepref\@enumdepth% sets \beameritemnestingprefix
+  \edef\beamer@enumtempl{enumerate \beameritemnestingprefix item}%
+  \@ifnextchar[{\beamer@@enum@}{\beamer@enum@}}
+\def\beamer@@enum@[{\@ifnextchar<{\beamer@enumdefault[}{\beamer@@@enum@[}}
+\def\beamer@enumdefault[#1]{\def\beamer@defaultospec{#1}%
+  \@ifnextchar[{\beamer@@@enum@}{\beamer@enum@}}
+\def\beamer@@@enum@[#1]{% partly copied from enumerate.sty
+  \@enLab{}\let\@enThe\@enQmark
+  \@enloop#1\@enum@
+  \ifx\@enThe\@enQmark\@warning{The counter will not be printed.%
+    ^^J\space\@spaces\@spaces\@spaces The label is: \the\@enLab}\fi
+  \def\insertenumlabel{\the\@enLab}
+  \def\beamer@enumtempl{enumerate mini template}%
+  \expandafter\let\csname the\@enumctr\endcsname\@enThe
+  \csname c@\@enumctr\endcsname7
+  \expandafter\settowidth
+  \csname leftmargin\romannumeral\@enumdepth\endcsname
+  {\the\@enLab\hspace{\labelsep}}%
+  \beamer@enum@}
+\def\beamer@enum@{%
+  \beamer@computepref\@itemdepth% sets \beameritemnestingprefix
+  \usebeamerfont{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamercolor[fg]{itemize/enumerate \beameritemnestingprefix body}%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body begin}%
+  \expandafter
+  \list
+  {\usebeamertemplate{\beamer@enumtempl}}
+  {\usecounter\@enumctr%
+    \def\makelabel##1{{\hss\llap{{%
+            \usebeamerfont*{enumerate \beameritemnestingprefix item}%
+            \usebeamercolor[fg]{enumerate \beameritemnestingprefix item}##1}}}}}%
+  \setlength\itemsep{\fill}
+  \ifnum \@itemdepth >1
+  \vfill
+  \fi%
+  \beamer@cramped%
+  \raggedright%
+  \beamer@firstlineitemizeunskip%
+}
+\def\endenumerate{\ifhmode\unskip\fi\endlist%
+  \usebeamertemplate{itemize/enumerate \beameritemnestingprefix body end}
+  \ifnum \@itemdepth >1
+  \vfil
+  \fi%
+}
+\makeatother
+
+% Section title page
+\AtBeginSection[]{
+  \begin{frame}
+  \vfill
+  \centering
+  \begin{beamercolorbox}[sep=8pt, center, shadow=true, rounded=true]{title}
+    \usebeamerfont{title}\insertsectionhead\par%
+  \end{beamercolorbox}
+  \vfill
+  \end{frame}
+}
+
+% Item icon
+% Itemize
+\setbeamertemplate{enumerate item}[square]
+\setbeamertemplate{itemize item}{\raise0.1ex \hbox{\scriptsize\faAtom}}
+\setbeamertemplate{itemize subitem}{\raise0.15ex \hbox{\tiny\faDiceD20}}
+\setbeamertemplate{itemize subsubitem}{\raise0.1ex \hbox{\tiny\faCog}}
+
+% -------------
+% Maths support
+% -------------
+% Load maths packages
+%% Typical packages
+\usepackage{%
+  amsmath,%
+  amsthm,%
+  amssymb,%
+  mathrsfs,%
+  mathtools,%
+  gensymb,%
+  braket,%
+  mleftright,%
+  nicefrac,%
+  interval,%
+  empheq,% for boxing aligned equations
+  stmaryrd,% for double-lined brackets
+  accents,% for accent fine-tuning
+}
+
+% Settings for packages
+%% interval: change open fences to round brackets
+\intervalconfig{soft open fences}
+
+%% mleftright: redefine \left as \mleft and \right as \mright
+\mleftright
+
+%% Theorems
+\theoremstyle{plain} % insert below all blocks in italic
+\newtheorem{theorem}{Theorem}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+
+% ------------------
+% Scientific support
+% ------------------
+% Chemistry
+\usepackage[version=4]{mhchem}
+
+% Scientific typesetting
+\usepackage{siunitx}
+
+
+% ----------
+% Typography
+% ----------
+% Context-sensitive quotation marks
+\usepackage[english=british]{csquotes}
+
+%% Micro-typography
+%\usepackage[%
+%  activate={true, nocompatibility},%
+%  draft,%
+%  tracking=true,%
+%  factor=1100,%
+%%  stretch=10,%
+%%  shrink=10%
+%]{microtype}
+%
+%% Reduce spacing between sc characters
+%\SetTracking{encoding={*}, shape=sc}{40}
+
+
+% -------------------
+% Font configurations
+% -------------------
+% Font support
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{%
+  Ligatures=TeX,%
+  Numbers=Lining,%
+}
+
+\newfontfamily\Raleway{Raleway}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+\newfontfamily\Lato{Lato}[%
+  Ligatures=TeX,%
+]
+
+\usefonttheme{structurebold}
+
+% Main font selection
+
+\setmainfont{Lato}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+\setsansfont{Lato}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+
+\setbeamerfont{headline}{family=\Raleway}
+\setbeamerfont{headline title}{size=\huge, series=\bfseries}
+\setbeamerfont{headline author}{size=\Large}
+\setbeamerfont{headline institute}{size=\normalsize}
+\setbeamerfont{footline}{family=\Raleway}
+\setbeamerfont{footline address}{size=\normalsize}
+\setbeamerfont{block title}{family=\Raleway, size=\LARGE, series=\bfseries}
+\setbeamerfont{block body}{size=\large}
+\setbeamerfont{heading}{family=\Lato, series=\bfseries}
+\setbeamerfont{caption}{size=\small}
+
+\usepackage{fontawesome5}
+
+% Maths font selection
+\usepackage[%
+  math-style=ISO,%
+  bold-style=ISO,%
+  warnings-off={mathtools-colon},%
+]{unicode-math}
+\setmathfont{Fira Math}
+
+% Main maths font
+\setmathfont{Fira Math}
+
+% Missing glyph ranges
+\setmathfont{STIX Two Math}[%
+  range={scr, bfscr, cal, bfcal, sfup, frak, bffrak},%
+]
+
+
+% ----------------
+% Language support
+% ----------------
+% polyglossia requires fontspec
+\usepackage{polyglossia}
+\setmainlanguage[variant=british]{english}
+
+% Date and time format
+\usepackage{datetime}
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH] \THEYEAR
+}
+
+
+% -------
+% Colours
+% -------
+% Colour aliases
+\colorlet{SpinColour}{DarkGreen}
+\colorlet{SpatialColour}{DeepPink3}
+
+
+% ------
+% Tables
+% ------
+\usepackage{booktabs, multirow}
+
+
+% --------
+% Diagrams
+% --------
+% Graphics
+\usepackage{graphicx, transparent}
+\usepackage[export]{adjustbox}
+
+% TikZ & PGFPlots
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.17}
+
+\usetikzlibrary{%
+  external,%
+  calc,%
+  luamath,%
+  positioning,%
+  decorations.pathreplacing,%
+  arrows.meta,%
+  3d,%
+  backgrounds,%
+  overlay-beamer-styles,%
+  patterns,%
+  spy,%
+}
+
+\usepgfplotslibrary{%
+  groupplots,%
+  patchplots,%
+  colormaps,%
+  fillbetween,%
+}
+
+% PGFPlots cycle colours
+\pgfplotscreateplotcyclelist{coloronly}{%
+  {red},%
+  {blue},%
+  {black!60!green},%
+  {black!20!orange},%
+  {green!30!brown},%
+  {blue!40!red},%
+  {black!60!blue},%
+  {black!40!yellow},%
+  {red!50!pink},%
+  {green!70!blue},%
+}
+
+% TikZ styles
+\tikzset{
+  nodeStyleGreen/.style={
+    draw=Tikzgreen,
+    fill=Tikzgreenlight,
+    align=left,
+    thick,
+    rounded corners
+  }
+}
+
+\tikzset{
+  nodeStyleRed/.style={
+    draw=Tikzred,
+    fill=Tikzredlight,
+    align=left,\right)
+    thick,
+    rounded corners
+  }
+}
+
+\tikzset{
+  nodeStyleBlue/.style={
+    draw=Tikzblue,
+    fill=Tikzbluelight,
+    align=left,
+    thick,
+    rounded corners
+  }
+}
+
+\tikzset{
+  lineStyleRed/.style={
+    color=Tikzred,
+    opacity=0.75,
+    line width=2pt,
+  }
+}
+
+\tikzset{
+  lineStyleGreen/.style={
+    color=Tikzgreen,
+    opacity=0.75,
+    line width=2pt,
+  }
+}
+
+\tikzset{
+  lineStyleBlue/.style={
+    color=Tikzblue,
+    opacity=0.75,
+    line width=2pt,
+  }
+}
+
+\def\MarkLt{6pt}
+\def\MarkSep{3pt}
+\tikzset{
+  TwoMarks/.style={
+    postaction={
+      decorate,
+      decoration={
+        markings,
+        mark=at position #1 with{
+          \begin{scope}[xslant=0.2]
+            \draw[line width=\MarkSep,white,-] (0pt,-\MarkLt) -- (0pt,\MarkLt);
+            \draw[-] (-0.5*\MarkSep,-\MarkLt) -- (-0.5*\MarkSep,\MarkLt);
+            \draw[-] (0.5*\MarkSep,-\MarkLt) -- (0.5*\MarkSep,\MarkLt);
+          \end{scope}
+        }
+      }
+    }
+  },
+  TwoMarks/.default={0.5}
+}
+
+% Plot conditionals
+\usepackage{xifthen}
+
+% Equation highlighting
+\usepackage[customcolors, beamer, markings]{hf-tikz}
+
+% UML diagram
+\usepackage{tikz-uml}
+\tikzumlset{font=\ttfamily}
+
+% TikZ externalize switch
+\newif\iftikzex
+%\tikzextrue
+\tikzexfalse
+
+% Command for tikzexternalize/includegraphics
+\tikzexternalize
+\makeatletter
+\newcommand*{\useexternalfile}[4]{
+  \iftikzex
+    \tikzsetnextfilename{tikzoutput/#4-output}
+    \scalebox{#1}{\input{\tikzexternal@filenameprefix#4.tikz.tex}}
+  \else
+    \includegraphics[scale=#1, trim=#2 0 #3 0]{\tikzexternal@filenameprefix tikzoutput/#4-output.pdf}
+  \fi
+}
+\makeatother
+\tikzexternaldisable
+
+% Subplots
+\usepackage{subcaption}
+
+
+% ----------
+% Animations
+% ----------
+\usepackage[final, controls, buttonsize=0.8em]{animate}
+
+
+% ------------------------
+% References & bookmarking
+% ------------------------
+% Hyperlink references
+\usepackage{hyperref}
+
+% Footnotes
+\renewcommand{\thefootnote}{\alph{footnote}}
+
+% Footnote kerning with punctuation
+% Do not use with option multiple for footmisc since this package has a different way of handling multiple footnotes.
+\usepackage{fnpct}
+
+% Bibliography
+\usepackage[
+  sorting=none,
+  giveninits=true,
+  style=authortitle,
+  autocite=superscript,
+  dateabbrev=false,
+  doi=false,
+  url=false,
+  isbn=false,
+  backend=biber
+]{biblatex}
+\addbibresource{bib/groupupdate-aug2022.bib}
+
+\newrobustcmd*{\footlessfullcite}{
+  \AtNextCite{
+    \renewbibmacro{title}{}\renewbibmacro{in:}{}
+  }
+  \footfullcite
+}
+
+
+% -----------------
+% Cross-referencing
+% -----------------
+% To be loaded after hyperref
+\usepackage[capitalise, noabbrev]{cleveref}
+
+
+% --------------------------
+% Special symbols & commands
+% --------------------------
+% Symbols
+\newcommand*{\D}{\mathrm{d}}
+\newcommand*{\euler}{e}
+\newcommand*{\imag}{i}
+\newcommand*{\T}{\symsfup{T}}
+
+% Commands
+\newcommand*{\vecop}[1]{\hat{\boldsymbol{#1}}}
+\newcommand*{\norm}[1]{\left\lVert#1\right\rVert}
+\newcommand*{\emphbf}[2]{%
+  \textbf{\color{#1}#2}%
+}
+\newcommand*{\emphit}[2]{%
+  \textit{\color{#1} #2}%
+}
+\newcommand*\widefbox[1]{\fbox{\hspace{1em}#1\hspace{1em}}}
+
+% Operators
+\DeclareMathOperator{\Tr}{tr}
+\DeclareMathOperator{\Ln}{Ln}
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\diag}{diag}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\re}{\symfrak{Re}}
+
+
+%% Latin abbreviations
+\usepackage{xspace}
+\newcommand*{\eg}{\textit{e.g.}\@\xspace}
+\newcommand*{\ie}{\textit{i.e.}\@\xspace}
+\newcommand*{\ca}{\textit{ca.}\@\xspace}
+\newcommand*{\cf}{\textit{cf.}\@\xspace}
+
+\makeatletter
+\newcommand*{\etc}{%
+    \@ifnextchar{.}%
+        {\textit{etc}}%
+        {\textit{etc}.\@\xspace}%
+}
+\makeatother
+
+% New commands
+\makeatletter
+\newcommand{\annotate}[5]{
+  % Format: \annotate{overlay scope}{colour}{path}{alignment}{text}
+  \begin{tikzpicture}[overlay]
+    \draw<#1>[stealth-, #2, draw, use marker id] #3 node[#4]{#5};
+  \end{tikzpicture}
+}
+
+\newcommand*\bigcdot{
+  \mathpalette\bigcdot@{.5}
+}
+\newcommand*\bigcdot@[2]{
+  \mathbin{
+    \vcenter{
+      \hbox{\scalebox{#2}{$\m@th#1\bullet$}}
+    }
+  }
+}
+\makeatother
+
+% List of symbols
+\usepackage[%
+  nonumberlist,%
+  symbols,%
+  nogroupskip,%
+  nopostdot,%
+  nohypertypes={symbols}
+]{glossaries-extra} % package for glossaries
+
+
+% Hyphenated long forms
+\glsaddkey
+  {hyphenated}        % new key
+  {\relax}            % default value if "hyphenated" isn't used in \newglossaryentry
+  {\glsentryhyphx}    % analogous to \glsentrytext
+  {\Glsentryhyphx}    % analogous to \Glsentrytext
+  {\glshyphx}         % analogous to \glstext
+  {\Glshyphx}         % analogous to \Glstext
+  {\GLShyphx}         % analogous to \GLStext
+\newcommand{\GENglspostlinkhook}{%
+  \ifglsused{\glslabel}{}{ (\glsentryshort{\glslabel})}\glsunset \glslabel}
+\makeatletter
+\newcommand\metadef[1]{%
+  \expandafter\newcommand\csname gls#1\endcsname{%
+    \@ifstar{\csname sgls#1\endcsname}{\csname ngls#1\endcsname}%
+  }
+  \@namedef{sgls#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname gls#1x\endcsname*{##1}}}%
+  \@namedef{ngls#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname gls#1x\endcsname{##1}}}%
+  \expandafter\newcommand\csname Gls#1\endcsname{%
+    \@ifstar{\csname sGls#1\endcsname}{\csname nGls#1\endcsname}%
+  }
+  \@namedef{sGls#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname Gls#1x\endcsname*{##1}}}%
+  \@namedef{nGls#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname Gls#1x\endcsname{##1}}}%
+  \expandafter\newcommand\csname GLS#1\endcsname{%
+    \@ifstar{\csname sGLS#1\endcsname}{\csname nGLS#1\endcsname}%
+  }
+  \@namedef{sGLS#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname GLS#1x\endcsname*{##1}}}%
+  \@namedef{nGLS#1}##1{{\let\glspostlinkhook \GENglspostlinkhook\expandafter\csname GLS#1x\endcsname{##1}}}%
+}
+\makeatother
+
+\metadef{hyph}
+
+\loadglsentries{symbols/symbols}
+\loadglsentries{symbols/acronyms}
+
+\makeatletter
+% Thanks to Paul Gaborit https://tex.stackexchange.com/a/179946/38080
+\def\extractcoord#1#2#3{
+  \path let \p1=(#3) in \pgfextra{
+    \pgfmathsetmacro#1{\x{1}/\pgf@xx}
+    \pgfmathsetmacro#2{\y{1}/\pgf@yy}
+    \xdef#1{#1} \xdef#2{#2}
+  };
+}
+\makeatother
+\newcommand{\showboundingbox}{%
+    %
+    % Show the bounding box of the tikzpicture. Use as last command.
+    % It will not change the bounding box thanks to the overlay option.
+    %
+    \extractcoord\xa\ya{current bounding box.south west}
+    \extractcoord\xb\yb{current bounding box.north east}
+    \node [overlay, draw=red, fill=white, opacity=0.8, font=\tiny\ttfamily, anchor=north east] at (current bounding box.north east) {(\xa, \ya) (\xb, \yb)};
+}

@@ -1,0 +1,72 @@
+% !TeX document-id = {4b20f74a-885a-4146-b1bb-cebfdf55358e}
+% !TeX program=lualatex
+% !TeX TXS-program:bibliography=txs:///biber
+
+
+\input{preamble}
+
+% ---------------
+% Special lengths
+% ---------------
+\newlength{\size}
+\setlength{\size}{0.6cm}
+\newlength{\marksize}
+\newlength{\plotheight}
+\newlength{\plotwidth}
+
+% -----
+% Title
+% -----
+\title[Symmetry, Degeneracy, and Representability]{Symmetry, Degeneracy, and Representability}
+
+\subtitle{
+  {\small \normalfont \textit{Group Updates}}
+}
+
+\author[B. C. Huynh]{Bang C. Huynh\inst{\tiny 1}}
+
+\institute[]{
+  \inst{\tiny 1}Teale Group, School of Chemistry, University of Nottingham
+}
+
+\date[12th August 2022]{12\textsuperscript{\tiny th} August 2022}
+
+
+\titlegraphic{
+  \includegraphics[height=0.7cm, keepaspectratio]{images/UoNlogo.eps}
+  \hspace{0.5cm}
+  \includegraphics[height=0.7cm, keepaspectratio]{images/quest.eps}
+}
+
+
+% ----
+% Main
+% ----
+
+%\includeonly{deglieb/deglieb}
+%\includeonlyframes{current}
+\begin{document}
+% \tikzexternaldisable
+  % For every picture that defines or uses external nodes, you'll have to apply the 'remember picture' style. To avoid some typing, we'll apply
+  % the style to all pictures.
+  \tikzstyle{every picture}+=[remember picture]
+
+  % By default all math in TikZ nodes are set in inline mode. Change this to
+  % displaystyle so that we don't get small fractions.
+  \everymath{\displaystyle}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}
+    \titlepage
+  \end{frame}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  \include{introduction/introduction}
+  \include{wfdensym/wfdensym}
+  \include{deglieb/deglieb}
+  \include{conclusion/conclusion}
+
+
+\end{document}
