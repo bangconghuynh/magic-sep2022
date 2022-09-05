@@ -155,10 +155,10 @@ coltitle=white,center title}}
 \end{beamercolorbox}%
 
 % Comment the next 4 lines if you do not want the sub-section bar.
-% \begin{beamercolorbox}[ht=2.125ex,dp=1.125ex,%
-% leftskip=.3cm,rightskip=.3cm plus1fil]{subsection in head/foot}
-% \usebeamerfont{subsection in head/foot}\insertsubsectionhead
-% \end{beamercolorbox}%
+%\begin{beamercolorbox}[ht=2.125ex, dp=1.125ex,%
+%leftskip=.3cm, rightskip=.3cm plus1fil]{subsection in head/foot}
+%\usebeamerfont{subsection in head/foot}\insertsubsectionhead
+%\end{beamercolorbox}%
 }
 \setbeamercolor{author in head/foot}{bg=leftFootlineColor, fg=authorColor}
 \setbeamercolor{title in head/foot}{bg=middleFootlineColor, fg=footlineTitleColor}

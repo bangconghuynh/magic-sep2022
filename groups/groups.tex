@@ -1,0 +1,41 @@
+\section{Groups in magnetic fields}
+
+%  \subsection{Symmetry transformation}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{The electronic Hamiltonian}
+    \begin{itemize}
+      \item<1-> For an $\gls*{gen:Ne}$-electron system in a uniform magnetic field $\gls*{mag:vec}$, consider the Schr\"{o}dinger--Pauli Hamiltonian:
+      \begin{align*}
+        \gls*{op:hamil}
+          &= \frac{1}{2}
+            \sum_{k=1}^{\gls*{gen:Ne}}
+            \left\lvert
+              -\hat{\symbfit{p}}_k + \gls*{mag:vecpot}(\gls*{bas:spatialcoord}[_k])
+            \right\rvert^2
+          + \sum_{k=1}^{\gls*{gen:Ne}}
+            \gls*{op:pot1e}[_{\symup{ext}}](\gls*{bas:spatialcoord}[_k])
+          + \frac{1}{2}
+            \sum_{k \ne l}^{\gls*{gen:Ne}}
+            \frac{1}{\lvert \gls*{bas:spatialcoord}[_k] - \gls*{bas:spatialcoord}[_l] \rvert}
+          + \frac{g_s}{2}
+            \sum_{k=1}^{\gls*{gen:Ne}}
+            \gls*{mag:vec}(\gls*{bas:spatialcoord}[_k]) \cdot \hat{\symbfit{s}}_k\\[6pt]
+          &= \begin{multlined}[t]
+            \frac{1}{2} \sum_{k=1}^{\gls*{gen:Ne}} \hat{p}_k^2
+            + \sum_{k=1}^{\gls*{gen:Ne}}
+              \gls*{op:pot1e}[_{\symup{ext}}](\gls*{bas:spatialcoord}[_k])
+            + \frac{1}{2}
+              \sum_{k \ne l}^{\gls*{gen:Ne}}
+              \frac{1}{\lvert \gls*{bas:spatialcoord}[_k] - \gls*{bas:spatialcoord}[_l] \rvert}\\
+            +\gls*{mag:vecpot}(\gls*{bas:spatialcoord}[_k]) \cdot \hat{\symbfit{p}}_k
+            + \frac{g_s}{2}
+              \sum_{k=1}^{\gls*{gen:Ne}}
+              \gls*{mag:vec}(\gls*{bas:spatialcoord}[_k]) \cdot \hat{\symbfit{s}}_k
+            + \frac{1}{2}A^2(\gls*{bas:spatialcoord}[_k])
+          \end{multlined}
+      \end{align*}
+    \end{itemize}
+    \footlessfullcite{article:Tellgren2018}
+    \footlessfullcite{article:Irons2021}
+  \end{frame}

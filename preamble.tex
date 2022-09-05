@@ -256,16 +256,17 @@
   bold-style=ISO,%
   warnings-off={mathtools-colon},%
 ]{unicode-math}
-\setmathfont{Fira Math}
 
 % Main maths font
 \setmathfont{Fira Math}
 
 % Missing glyph ranges
 \setmathfont{STIX Two Math}[%
-  range={scr, bfscr, cal, bfcal, sfup, frak, bffrak},%
+  range={cal, bfcal, sfup, frak, bffrak},%
 ]
-
+\setmathfont{STIX Two Math}[%
+  range={scr, bfscr}, StylisticSet=1,%
+]
 
 % ----------------
 % Language support
@@ -424,10 +425,6 @@
 % Equation highlighting
 \usepackage[customcolors, beamer, markings]{hf-tikz}
 
-% UML diagram
-\usepackage{tikz-uml}
-\tikzumlset{font=\ttfamily}
-
 % TikZ externalize switch
 \newif\iftikzex
 %\tikzextrue
@@ -482,7 +479,7 @@
   isbn=false,
   backend=biber
 ]{biblatex}
-\addbibresource{bib/groupupdate-aug2022.bib}
+\addbibresource{bib/magic-sep2022.bib}
 
 \newrobustcmd*{\footlessfullcite}{
   \AtNextCite{
@@ -490,6 +487,10 @@
   }
   \footfullcite
 }
+\makeatletter
+  \def\@makefnmark{}
+\makeatletter
+\AtEveryCitekey{\iffootnote{\tiny}{\footnotesize}}
 
 
 % -----------------
