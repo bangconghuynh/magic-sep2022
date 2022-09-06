@@ -135,7 +135,6 @@ coltitle=white,center title}}
 \setbeamercolor*{block body alerted}{fg=alertBlockTextColor,bg=alertBlockColor}
 \setbeamercolor*{block title example}{fg=exampleBlockTitleTextColor,bg=exampleTitleBlockColor}
 \setbeamercolor*{block body example}{fg=exampleBlockTextColor,bg=exampleBlockColor}
-\setbeamerfont{block title}{size={}}
 \setbeamercolor{titlelike}{fg=titleTextColor,bg=titleColor}
 \setbeamercolor*{normal text}{fg=normalTextColor,bg=bodyColor}
 \setbeamercolor*{example text}{fg=exampleTextColor}
@@ -143,6 +142,13 @@ coltitle=white,center title}}
 \setbeamercolor{itemize item}{fg=titleColor!70}
 \setbeamercolor{enumerate item}{fg=titleColor!70}
 \setbeamercolor{description item}{fg=titleColor!70}
+
+\setbeamerfont{block title}{size=\normalsize}
+\setbeamerfont{block title alerted}{size=\normalsize}
+\setbeamerfont{block title example}{size=\normalsize}
+\setbeamerfont{block body}{size=\small}
+\setbeamerfont{block body alerted}{size=\small}
+\setbeamerfont{block body example}{size=\small}
 
 
 \useinnertheme{default}
@@ -155,10 +161,10 @@ coltitle=white,center title}}
 \end{beamercolorbox}%
 
 % Comment the next 4 lines if you do not want the sub-section bar.
-%\begin{beamercolorbox}[ht=2.125ex, dp=1.125ex,%
-%leftskip=.3cm, rightskip=.3cm plus1fil]{subsection in head/foot}
-%\usebeamerfont{subsection in head/foot}\insertsubsectionhead
-%\end{beamercolorbox}%
+\begin{beamercolorbox}[ht=2.125ex, dp=1.125ex,%
+leftskip=.3cm, rightskip=.3cm plus1fil]{subsection in head/foot}
+\usebeamerfont{subsection in head/foot}\insertsubsectionhead
+\end{beamercolorbox}%
 }
 \setbeamercolor{author in head/foot}{bg=leftFootlineColor, fg=authorColor}
 \setbeamercolor{title in head/foot}{bg=middleFootlineColor, fg=footlineTitleColor}

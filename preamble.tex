@@ -159,13 +159,6 @@
 %% mleftright: redefine \left as \mleft and \right as \mright
 \mleftright
 
-%% Theorems
-\theoremstyle{plain} % insert below all blocks in italic
-\newtheorem{theorem}{Theorem}
-
-\theoremstyle{definition}
-\newtheorem{definition}{Definition}
-
 
 % ------------------
 % Scientific support
@@ -471,7 +464,7 @@
 \usepackage[
   sorting=none,
   giveninits=true,
-  style=authortitle,
+  style=nature,
   autocite=superscript,
   dateabbrev=false,
   doi=false,
@@ -491,6 +484,22 @@
   \def\@makefnmark{}
 \makeatletter
 \AtEveryCitekey{\iffootnote{\tiny}{\footnotesize}}
+
+\renewbibmacro*{name:andothers}{% Based on name:andothers from biblatex.def
+  \ifboolexpr{
+    test {\ifnumequal{\value{listcount}}{\value{liststop}}}
+    and
+    test \ifmorenames
+  }
+  {\ifnumgreater{\value{liststop}}{1}
+     {\finalandcomma}
+     {}%
+   \andothersdelim\bibstring[\textit]{andothers}}
+  {}%
+}
+
+\setlength{\footnotesep}{2pt}
+\addtobeamertemplate{footnote}{\hskip -1.7em}{}
 
 
 % -----------------
