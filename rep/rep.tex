@@ -1,0 +1,213 @@
+\section{Unitary representation analysis}
+
+  \subsection{General formulation}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Group unitary representations on linear spaces}
+    \begin{itemize}
+      \item<1-> Consider a \emphbf{DarkGreen}{group $\gls*{struct:gengroup}$} that acts \emphit{Magenta}{unitarily} on a \emphbf{DarkGreen}{linear space $V$}.
+
+      \item<1-> Let $\symbfit{v}$ be an element in $V$.
+      The unitary action of $\gls*{struct:gengroup}$ on $\symbfit{v}$ generates an \emphbf{DarkGreen}{orbit}
+      \begin{equation*}
+        \gls*{struct:gengroup} \cdot \symbfit{v}
+          = \{ \hat{u}_i \symbfit{v} \mid u_i \in \gls*{struct:gengroup} \}
+      \end{equation*}
+      which spans a \emphbf{DarkGreen}{representation subspace} $\textcolor{DarkGreen}{\gls*{struct:rep}} \subseteq V$.\\
+      {\footnotesize For simplicity, we will assume that $\gls*{struct:gengroup} \cdot \symbfit{v}$ is a linearly independent basis.}
+
+      \item<2-> We seek to decompose $\gls*{struct:rep}$ into known \emphit{Magenta}{irreducible} representations of $\gls*{struct:gengroup}$ on $V$.\\[6pt]
+        $\hookrightarrow$ This \emphit{Magenta}{quantifies} the \emphit{Magenta}{symmetry} of $\symbfit{v}$ under the action of $\gls*{struct:gengroup}$.
+
+      \item<2-> To this end, we pick a reference element $\symbfit{v}_i = \hat{u}_i \symbfit{v}$ in $\gls*{struct:gengroup} \cdot \symbfit{v}$ and define the \emphbf{DarkGreen}{representation matrices $\symbfit{D}^{\gls*{struct:rep}}(u_k)$} for all $u_k \in \gls*{struct:gengroup}$:
+      \begin{equation*}
+        \hat{u}_k \symbfit{v}_i = \sum_{j} \symbfit{v}_j D^{\gls*{struct:rep}}_{ji}(u_k).
+      \end{equation*}
+      Their traces, \emphbf{DarkGreen}{$\chi^{\gls*{struct:rep}}(u_k)$}, give the \emphbf{DarkGreen}{characters} required for the decomposition of $\gls*{struct:rep}$.
+    \end{itemize}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Representation matrix determination}
+    \begin{itemize}
+      \item<1-> We opt for a projection method.\\
+      $\hookrightarrow$ This requires $V$ to be \emphit{Magenta}{endowed} with an \emphbf{DarkGreen}{inner product $\braket{\cdot | \cdot}$}.
+
+      \item<2-> Define a non-orthogonal projection operator
+      \begin{equation*}
+        \hat{\symscr{P}}_i =
+          \sum_j \ket{\symbfit{v}_i} (\symbfit{S}^{-1})_{ij} \bra{\symbfit{v}_j}
+      \end{equation*}
+      where $S_{ij} = \braket{\symbfit{v}_i | \symbfit{v}_j}$ such that $\hat{\symscr{P}}_i \ket{\symbfit{v}_j} = \delta_{ij} \ket{\symbfit{v}_i}$.
+
+      \item<3-> Application of $\hat{\symscr{P}}$ on the defining equation for $\symbfit{D}^{\gls*{struct:rep}}(u_k)$ yields
+      \begin{equation*}
+        \symbfit{D}^{\gls*{struct:rep}}(u_k) = \symbfit{S}^{-1} \symbfit{T}(u_k),
+      \end{equation*}
+      where
+      \begin{equation*}
+        \tikzmarkin<4>[nodeStyleGreen, mark at=0.56]{Tijk}(0.04,-0.20)(-0.06,0.40)
+          \annotate{4}{red}{(0,0)--++(0,-0.3)}{left}{%
+            $\lvert \gls*{struct:gengroup} \rvert^3$ elements%
+          }
+          T_{ij}(u_k)
+        \tikzmarkend{Tijk}
+          = \braket{\symbfit{v}_i | \hat{u}_k \symbfit{v}_j}.
+      \end{equation*}
+
+      \item<4-> \emphit{Magenta}{Closure} of $\gls*{struct:gengroup}$ $\implies$ $T_{ij}(u_k)$ can be \emphit{Magenta}{mapped to $T_{m1}(e)$} for some $m = 1, \ldots, \lvert \gls*{struct:gengroup} \rvert$.\\
+      $\hookrightarrow$ $\symbfit{T}(u_k)$ can be computed with \emphit{Magenta}{$\symcal{O}(\lvert \gls*{struct:gengroup} \rvert)$} time complexity.
+    \end{itemize}
+
+    \footlessfullcite{article:Soriano2014}
+  \end{frame}
+
+
+  \subsection{Formulation for current densities}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Current density linear space}
+    \begin{itemize}
+      \item<1-> The current densities $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ with $\gls*{bas:spatialcoord} \in \symbb{R}^3$ form a linear space $V_J$.
+      \item<1-> Define an inner product $\braket{\cdot | \cdot}$ on $V_J$ as
+      \begin{equation*}
+        \braket{\gls*{mag:jphys}_m | \gls*{mag:jphys}_n}
+        = \int
+          \gls*{mag:jphys}_m(\gls*{bas:spatialcoord})^{\dagger}
+          \ \gls*{mag:jphys}_n(\gls*{bas:spatialcoord})
+          \ \D\gls*{bas:spatialcoord}.
+      \end{equation*}
+      $\hookrightarrow$ Enables projection-based unitary representation analysis on $V_J$
+      \item<2-> Given a current density $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ and a symmetry or pseudo-symmetry \emphit{Magenta}{unitary} group $\gls*{struct:gengroup}$, the required overlap matrix elements for the symmetry analysis of $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ are of the form
+      \begin{equation*}
+        T_{m1}(e)
+          = \braket{\hat{u}_m \gls*{mag:jphys} | \gls*{mag:jphys}}
+          = \int
+            \tikzmarkin<3>[nodeStyleGreen, mark at=0.82]{umj}(0.04,-0.20)(-0.06,0.40)
+              \annotate{3}{red}{(0,0)--++(0,-0.3)}{below}{%
+                (pseudo-)symmetry-transformed current density%
+              }
+              (\hat{u}_m \gls*{mag:jphys})
+            \tikzmarkend{umj}(\gls*{bas:spatialcoord})^{\dagger}
+            \ \gls*{mag:jphys}(\gls*{bas:spatialcoord})
+            \ \D\gls*{bas:spatialcoord},
+        \quad
+        u_m \in \gls*{struct:gengroup}.
+      \end{equation*}
+    \end{itemize}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Non-perturbative current densities}
+    \begin{itemize}
+      \item<1-> Non-perturbative calculations in arbitrarily strong magnetic fields are performed in a basis of \emphbf{DarkGreen}{London \glsxtrlongpl{acr:ao}}:
+      \begin{equation*}
+        \gls*{bas:londonspatialbasis}[_{\mu}](\gls*{bas:spatialcoord}; \symbfit{R}_{\mu}) =
+          \gls*{bas:spatialbasis}[_{\mu}](\gls*{bas:spatialcoord}; \symbfit{R}_{\mu})
+          \exp\left[-i \gls*{mag:vecpot}(\symbfit{R}_{\mu}) \cdot \gls*{bas:spatialcoord}\right].
+      \end{equation*}
+
+      \item<1-> In this basis, the current density can be partitioned into the \emphbf{blue}{diamagnetic} and \emphbf{red}{paramagnetic} contributions with the \emphit{Magenta}{non-perturbative} forms:
+      \begin{gather*}
+        \gls*{mag:jphys}(\gls*{bas:spatialcoord}) = \textcolor{blue}{\gls*{mag:jd}(\gls*{bas:spatialcoord})} + \textcolor{red}{\gls*{mag:jp}(\gls*{bas:spatialcoord})}\\
+        \textcolor{blue}{\gls*{mag:jd}(\gls*{bas:spatialcoord})}
+        = -\gls*{mag:vecpot}(\gls*{bas:spatialcoord})
+          \sum_{\sigma} \gls*{bas:londonspatialbasis}[^*_{\mu}](\gls*{bas:spatialcoord})
+          \gls*{bas:londonspatialbasis}[_{\nu}](\gls*{bas:spatialcoord})
+          P_{\sigma}^{\nu\mu},
+        \qquad
+        \textcolor{red}{\gls*{mag:jp}(\gls*{bas:spatialcoord})}
+        = \frac{i}{2}
+          \sum_{\sigma} \symbf{\nabla}\gls*{bas:londonspatialbasis}[^*_{\mu}](\gls*{bas:spatialcoord})
+          \gls*{bas:londonspatialbasis}[_{\nu}](\gls*{bas:spatialcoord})
+          P_{\sigma}^{\nu\mu} + \textrm{c.c.}
+      \end{gather*}
+
+      \item<2-> This partition depends on the gauge origin $\symbfit{G}$ which manifests itself in
+      \begin{equation*}
+        \gls*{mag:vecpot}(\gls*{bas:spatialcoord}) =
+          \frac{1}{2} \gls*{mag:vec} \times (\gls*{bas:spatialcoord} - \symbfit{G}).
+      \end{equation*}
+    \end{itemize}
+
+    \footlessfullcite{article:Soncini2004}
+    \footlessfullcite{article:Tellgren2008,article:Tellgren2014}
+    \footlessfullcite{article:Irons2021}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Ipsocentric \textit{DZ}}
+    \begin{itemize}
+      \item<1-2> We employ the \emphbf{DarkGreen}{ipsocentric \textit{DZ}} method which makes use of a continuous set of gauge transformations:
+      \begin{equation*}
+        \symbfit{G} \equiv \symbfit{G}(\gls*{bas:spatialcoord}) = \gls*{bas:spatialcoord},
+      \end{equation*}
+      so that $\textcolor{blue}{\gls*{mag:jd}(\gls*{bas:spatialcoord})}$ vanishes and $\gls*{mag:jphys}(\gls*{bas:spatialcoord}) = \textcolor{red}{\gls*{mag:jp}(\gls*{bas:spatialcoord})}$ formally.
+
+      \item<2> In addition,
+      \begin{align*}
+        \gls*{bas:londonspatialbasis}[_{\mu}](\gls*{bas:spatialcoord}; \symbfit{R}_{\mu})
+        &= \gls*{bas:spatialbasis}[_{\mu}](\gls*{bas:spatialcoord}; \symbfit{R}_{\mu})
+          \exp\left[-\frac{i}{2} (\gls*{mag:vec} \times (\symbfit{R}_{\mu} - \textcolor{DarkGreen}{\gls*{bas:spatialcoord}})) \cdot \gls*{bas:spatialcoord}\right]\\
+        &= \gls*{bas:spatialbasis}[_{\mu}](\gls*{bas:spatialcoord}; \symbfit{R}_{\mu})
+          \exp\left[-\frac{i}{2} (\gls*{mag:vec} \times \symbfit{R}_{\mu}) \cdot \gls*{bas:spatialcoord}\right],
+      \end{align*}
+      which is the same as keeping $\symbfit{G}$ at the space-fixed origin.
+    \end{itemize}
+
+    \footlessfullcite{article:Keith1993a}
+    \footlessfullcite{article:Soncini2004}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Integrals}
+    \begin{itemize}
+      \item<1-> The required overlap matrix elements for the symmetry analysis of $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ may now be cast in a computable form:
+        \begin{align*}
+          T_{m1}(e)
+            &= \int
+              (\hat{u}_m \textcolor{red}{\gls*{mag:jp}})(\gls*{bas:spatialcoord})^{\dagger}
+              \ \textcolor{red}{\gls*{mag:jp}}(\gls*{bas:spatialcoord})
+              \ \D\gls*{bas:spatialcoord}\\
+            &= \begin{multlined}[t]
+              \frac{1}{4}
+                \sum_{\sigma\sigma'}
+                  (P^{\nu\mu}_{\sigma})^*
+                  P^{\nu'\mu'}_{\sigma'}\\
+                  \tikzmarkin<2>[nodeStyleGreen, mark at=0.77]{2d4cint}(0.04,-0.35)(-0.06,0.55)
+                    \annotate{2}{red}{(0,0)--++(0,-0.3)}{below}{%
+                      second derivatives of four-centre overlap integrals%
+                    }
+                    \int
+                      (\hat{u}_m \gls*{bas:londonspatialbasis}[^*_{\nu}])(\gls*{bas:spatialcoord})
+                      \ \symbf{\nabla}
+                      \tikzmarkin<3>[nodeStyleGreen, mark at=0.81]{umj}(0.04,-0.20)(-0.06,0.40)
+                        \annotate{3}{red}{(0,0)--++(0,-0.3)}{below}{%
+                          (pseudo-)symmetry-transformed London orbitals%
+                        }
+                        (\hat{u}_m \gls*{bas:londonspatialbasis}[_{\mu}])
+                      \tikzmarkend{umj}(\gls*{bas:spatialcoord})^{\T}
+                      \left[
+                        \symbf{\nabla}
+                        \gls*{bas:londonspatialbasis}[^*_{\mu'}](\gls*{bas:spatialcoord})
+                        \ \gls*{bas:londonspatialbasis}[_{\nu'}](\gls*{bas:spatialcoord})
+                        -
+                        \symbf{\nabla}
+                        \gls*{bas:londonspatialbasis}[_{\mu'}](\gls*{bas:spatialcoord})
+                        \ \gls*{bas:londonspatialbasis}[^*_{\nu'}](\gls*{bas:spatialcoord})
+                      \right]
+                      \ \D \gls*{bas:spatialcoord}
+                  \tikzmarkend{2d4cint}
+                  + \textrm{c.c.}
+              \end{multlined}
+        \end{align*}
+    \end{itemize}
+  \end{frame}

@@ -487,8 +487,8 @@
   type = symbols,%
 }
 \newglossaryentry{bas:spinbasis}{%
-  name = {$\omega\left(\gls*{bas:spincoord}\right)$},%
-  text = {\omega},%
+  name = {$\zeta\left(\gls*{bas:spincoord}\right)$},%
+  text = {\zeta},%
   description = {spin basis function},%
   sort = {12spinbasis},%
   parent = symbcat:bas,%
@@ -499,6 +499,14 @@
   text = {\varphi},%
   description = {spatial basis function},%
   sort = {13spatialbasis},%
+  parent = symbcat:bas,%
+  type = symbols,%
+}
+\newglossaryentry{bas:londonspatialbasis}{%
+  name = {$\omega\left(\gls*{bas:spatialcoord}\right)$},%
+  text = {\omega},%
+  description = {London spatial basis function},%
+  sort = {13blondonspatialbasis},%
   parent = symbcat:bas,%
   type = symbols,%
 }
@@ -667,6 +675,22 @@
   name = {$\symbfit{j}$},%
   text = {\symbfit{j}},%
   description = {magnetically induced current density},%
+  sort = {52magvecpot},%
+  parent = symbcat:mag,%
+  type = symbols,%
+}
+\newglossaryentry{mag:jd}{%
+  name = {$\symbfit{j}_{\symup{d}}$},%
+  text = {\symbfit{j}_{\symup{d}}},%
+  description = {magnetically induced diamagnetic current density},%
+  sort = {52magvecpot},%
+  parent = symbcat:mag,%
+  type = symbols,%
+}
+\newglossaryentry{mag:jp}{%
+  name = {$\symbfit{j}_{\symup{p}}$},%
+  text = {\symbfit{j}_{\symup{p}}},%
+  description = {magnetically induced paramagnetic current density},%
   sort = {52magvecpot},%
   parent = symbcat:mag,%
   type = symbols,%
