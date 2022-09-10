@@ -1,0 +1,36 @@
+\ifdefined\molsize
+  \setlength{\molsize}{1.2cm}
+\else
+  \newlength{\molsize}
+  \setlength{\molsize}{1.2cm}
+\fi
+\begin{tikzpicture}
+  \coordinate (top) at (0, 0.50\molsize);
+  \coordinate (bottom) at (0, -0.50\molsize);
+  \coordinate (topleft) at (-0.553\molsize, 0.242\molsize);
+  \coordinate (bottomleft) at (-0.553\molsize, -0.242\molsize);
+  \coordinate (topright) at (0.553\molsize, 0.242\molsize);
+  \coordinate (bottomright) at (0.553\molsize, -0.242\molsize);
+  % =====================
+  % Molecular arrangement
+  % =====================
+  \draw[densely dotted] (top) -- (bottom);
+  \draw[densely dotted] (topleft) -- (bottomright);
+  \draw[densely dotted] (topright) -- (bottomleft);
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (top) {};
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (bottom) {};
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (topleft) {};
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (bottomleft) {};
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (topright) {};
+  \node[draw, shape=circle, fill=gray, scale=0.4] at (bottomright) {};
+  % =====
+  % Field
+  % =====
+  \draw[->, very thick] (2, 0) -- ++(0, 0.7) node[scale=0.6, anchor=south, inner sep=1pt] {$\symbfit{B}$};
+  % =================
+  % Coordinate system
+  % =================
+  \draw[->] (3, 0) -- ++(0.553, -0.242) node[anchor=west, scale=0.7] {$y$};
+  \draw[->] (3, 0) -- ++(0, 0.7) node[anchor=south, scale=0.7] {$z$};
+  \draw[->] (3, 0) -- ++(-0.553, -0.242) node[anchor=north east, scale=0.7] {$x$};
+\end{tikzpicture}

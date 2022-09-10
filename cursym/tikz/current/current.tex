@@ -1,0 +1,368 @@
+% !TeX program=lualatex
+\documentclass[crop]{standalone}
+\usepackage[svgnames, x11names, rgb, luatex]{xcolor}
+% -------------
+% Maths support
+% -------------
+% Load maths packages
+%% Typical packages
+\usepackage{%
+  amsmath,%
+  amsthm,%
+  amssymb,%
+  mathrsfs,%
+  mathtools,%
+  gensymb,%
+  braket,%
+  mleftright,%
+  nicefrac,%
+  interval,%
+  empheq,% for boxing aligned equations
+  stmaryrd,% for double-lined brackets
+  accents,% for accent fine-tuning
+}
+
+% Settings for packages
+%% interval: change open fences to round brackets
+\intervalconfig{soft open fences}
+
+%% mleftright: redefine \left as \mleft and \right as \mright
+\mleftright
+
+
+% ------------------
+% Scientific support
+% ------------------
+% Chemistry
+\usepackage[version=4]{mhchem}
+
+% Scientific typesetting
+\usepackage{siunitx}
+\DeclareSIUnit{\atomicunit}{a.u.}
+
+
+% ----------
+% Typography
+% ----------
+% Context-sensitive quotation marks
+\usepackage[english=british]{csquotes}
+
+%% Micro-typography
+%\usepackage[%
+%  activate={true, nocompatibility},%
+%  draft,%
+%  tracking=true,%
+%  factor=1100,%
+%%  stretch=10,%
+%%  shrink=10%
+%]{microtype}
+%
+%% Reduce spacing between sc characters
+%\SetTracking{encoding={*}, shape=sc}{40}
+
+
+% -------------------
+% Font configurations
+% -------------------
+% Font support
+\usepackage[no-math]{fontspec}
+\defaultfontfeatures{%
+  Ligatures=TeX,%
+  Numbers=Lining,%
+}
+
+\newfontfamily\Raleway{Raleway}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+\newfontfamily\Lato{Lato}[%
+  Ligatures=TeX,%
+]
+
+% Main font selection
+
+\setmainfont{Lato}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+\setsansfont{Lato}[%
+  UprightFont=*-Regular,%
+  ItalicFont=*-Italic,%
+  BoldFont=*-Bold,%
+  BoldItalicFont=*-BoldItalic,%
+  Ligatures=TeX,%
+]
+
+\usepackage{fontawesome5}
+
+% Maths font selection
+\usepackage[%
+  math-style=ISO,%
+  bold-style=ISO,%
+  warnings-off={mathtools-colon},%
+]{unicode-math}
+
+% Main maths font
+\setmathfont{Fira Math}
+
+% Missing glyph ranges
+\setmathfont{STIX Two Math}[%
+  range={cal, bfcal, sfup, frak, bffrak},%
+]
+\setmathfont{STIX Two Math}[%
+  range={scr, bfscr}, StylisticSet=1,%
+]
+
+% ----------------
+% Language support
+% ----------------
+% polyglossia requires fontspec
+\usepackage{polyglossia}
+\setmainlanguage[variant=british]{english}
+
+% Date and time format
+\usepackage{datetime}
+\newdateformat{monthyeardate}{%
+  \monthname[\THEMONTH] \THEYEAR
+}
+
+
+% -------
+% Colours
+% -------
+% Colour aliases
+\colorlet{SpinColour}{DarkGreen}
+\colorlet{SpatialColour}{DeepPink3}
+
+% --------
+% Diagrams
+% --------
+% Graphics
+\usepackage{graphicx, transparent}
+\usepackage[export]{adjustbox}
+
+% TikZ & PGFPlots
+\usepackage{pgfplots}
+
+\pgfplotsset{compat=1.17}
+
+\usetikzlibrary{%
+  external,%
+  calc,%
+  luamath,%
+  positioning,%
+  decorations.pathreplacing,%
+  arrows.meta,%
+  3d,%
+  backgrounds,%
+  overlay-beamer-styles,%
+  patterns,%
+  spy,%
+}
+
+\usepgfplotslibrary{%
+  groupplots,%
+  patchplots,%
+  colormaps,%
+  fillbetween,%
+}
+
+% PGFPlots cycle colours
+\pgfplotscreateplotcyclelist{coloronly}{%
+  {red},%
+  {blue},%
+  {black!60!green},%
+  {black!20!orange},%
+  {green!30!brown},%
+  {blue!40!red},%
+  {black!60!blue},%
+  {black!40!yellow},%
+  {red!50!pink},%
+  {green!70!blue},%
+}
+
+\begin{document}
+%  \pgfplotstableread[col sep=comma]{state0-sym0-t60.000-b1.000-0.000-0.000.extracted.jphys-t}\data
+  \pgfplotstableread[col sep=comma]{test}\data
+
+  \begin{tikzpicture}[
+%    trim axis group left,
+%    trim axis group right,
+  ]
+    \begin{groupplot}[
+        % =============
+        % Group configs
+        % =============
+        group style={
+          group size=1 by 1,
+          xlabels at=edge bottom,
+          xticklabels at=edge bottom,
+          ylabels at=edge left,
+          vertical sep=0.6cm,
+          horizontal sep=0.6cm,
+        },
+        % =================
+        % Groupplot general
+        % =================
+        scale only axis,
+        cycle list name=coloronly,
+        unbounded coords=jump,
+        % ===========
+        % Axis format
+        % ===========
+        % -----------
+        % Axis scales
+        % -----------
+        xmin=-2.1, xmax=2.1,
+        ymin=-1.3, ymax=2.9,
+        % -----------
+        % Axis labels
+        % -----------
+        label style={font=\footnotesize},
+        xlabel={$y / a_0$},
+        xlabel style={align=center, font=\scriptsize},
+        ylabel={$z / a_0$},
+        ylabel style={yshift=-2ex, font=\scriptsize},
+        % -----------
+        % Tick labels
+        % -----------
+        tick label style={font=\tiny},
+        x tick label style={
+          /pgf/number format/.cd,
+          fixed,
+          fixed zerofill,
+          precision=1,
+          /tikz/.cd
+        },
+        every x tick scale label/.style={
+          at={(xticklabel* cs:1,2em)},
+          anchor=north,
+          inner sep=0pt,
+        },
+        y tick label style={
+          /pgf/number format/.cd,
+          fixed,
+          fixed zerofill,
+          precision=1,
+          /tikz/.cd,
+          text width=width("$-4.0$"),
+          align=right
+        },
+        every y tick scale label/.style={
+          at={(yticklabel* cs:1.03,0.6em)},
+          anchor=south east,
+          inner sep=0pt,
+        },
+        % ------------
+        % Tick configs
+        % ------------
+        xtick pos=left,
+        xtick align=outside,
+        minor x tick num=0,
+        xtick distance=0.2,
+        ytick pos=left,
+        yticklabel pos=left,
+        ytick align=outside,
+        minor y tick num=0,
+        ytick distance=0.2,
+        % ==========
+        % Colour bar
+        % ==========
+        colorbar,
+        colorbar style={
+%          at={(rel axis cs:1.03,0.5)},
+%          anchor=west,
+          width=0.04*\pgfkeysvalueof{/pgfplots/parent axis width},
+          height=\pgfkeysvalueof{/pgfplots/parent axis height},
+          ylabel={$\lvert \symbfit{j}(\symbfit{r}) \rvert / \si{\atomicunit}$},
+          ylabel style={font=\tiny, yshift=2ex},
+          ytick distance=0.01,
+          minor y tick num=1,
+          ytick pos=both,
+          ytick align=inside,
+          yticklabel style={
+            /pgf/number format/.cd,
+            fixed,
+            fixed zerofill,
+            precision=1,
+            /tikz/.cd,
+            align=right,
+            xshift=-1.5ex,
+          },
+        },
+      ]
+      \nextgroupplot[
+        % ===============
+        % Subplot general
+        % ===============
+        align=center,
+        % ============
+        % Title format
+        % ============
+        title={$\lvert \symbfit{B} \rvert = 1.0 B_0$, UHF, 6-31G*},
+        title style={yshift=-1ex, font={\footnotesize}},
+        % ===========
+        % Axis format
+        % ===========
+        % -----------
+        % Axis scales
+        % -----------
+        % -----------
+        % Axis labels
+        % -----------
+        % -----------
+        % Tick labels
+        % -----------
+        % ------------
+        % Tick configs
+        % ------------
+        % =============
+        % Legend format
+        % =============
+        % ====================
+        % Colour configuration
+        % ====================
+        colormap/cool,
+%        point meta rel=per plot,
+        point meta min=0,
+        point meta max=0.06,
+        % ===========
+        % Annotations
+        % ===========
+        after end axis/.code={
+          \node[shape=circle, draw=black, fill=gray, scale=.6] (H0) at (axis cs: 0, 0) {};
+          \node[shape=circle, draw=black, fill=gray, scale=.6] (H1) at (axis cs: 0.87990555, 1.52404114) {};
+          \node[shape=circle, draw=black, fill=gray, scale=.6] (H2) at (axis cs: -0.87990555, 1.52404114) {};
+          \draw[thick] (H0) -- (H1) -- (H2) -- (H0) -- cycle;
+          \coordinate (M01) at ($(H0)!.5!(H1)$);
+          \coordinate (M02) at ($(H0)!.5!(H2)$);
+          \coordinate (M12) at ($(H1)!.5!(H2)$);
+          \draw [->, densely dotted, very thick, DarkGreen] ($(M01)!0.3!270:(H0)$) -- ($(M01)!0.3!90:(H0)$) -- ++(rel axis cs: 0.1, 0) node[anchor=west] {$0.1$};
+          \draw [->, densely dotted, very thick, DarkGreen] ($(M02)!0.3!90:(H0)$) -- ($(M02)!0.3!270:(H0)$) -- ++(rel axis cs: -0.05, -0.0866) node[anchor=north] {$0.1$};
+          \draw [->, densely dotted, very thick, DarkGreen] ($(M12)!0.3!270:(H1)$) -- ($(M12)!0.3!90:(H1)$) -- ++(rel axis cs: -0.05, 0.0866) node[anchor=south] {$0.1$};
+        },
+      ]
+      \addplot[%
+        thick,%
+        quiver={%
+          u=\thisrow{v},%
+          v=\thisrow{w},%
+          scale arrows={2.0},
+          every arrow/.append style={
+            color=mapped color,%
+            opacity=.3,%
+            -{Stealth[length=0pt 4, width=0pt 3]}
+          },
+        },%
+        point meta=\thisrow{m},%
+        -stealth%
+      ] table {\data};
+    \end{groupplot}
+  \end{tikzpicture}
+\end{document}

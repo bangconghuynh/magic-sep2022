@@ -1,0 +1,227 @@
+\section{Current density symmetry}
+
+  \subsection{\ce{H3} radical}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{The electronic structure of \ce{H3} radical}
+    \begin{itemize}
+      \item<1-> Consider a triangular \ce{H3} radical in a \emphit{Magenta}{perpendicular magnetic field}.
+      \begin{figure}
+        \centering
+        \scalebox{.8}{\input{./cursym/tikz/h3geom.tikz.tex}}
+      \end{figure}
+
+      \item<2-> Back-of-the-envelope properties for $\theta = 60\degree$:
+      \begin{columns}[T]
+        \begin{column}{.40\textwidth}
+          \emphbf{red}{Zero field}
+          \begin{itemize}
+            \item<2-> Spatial sym. group: $\symcal{G} = \textcolor{red}{\symcal{D}_{3h}}$
+          \end{itemize}
+        \end{column}
+        \begin{column}{.50\textwidth}
+          \emphbf{blue}{Finite fields}
+          \begin{itemize}
+            \item<2-> Magnetic sym. group: $\symcal{M} = \textcolor{blue}{\symcal{D}_{3h}(\symcal{C}_{3h})}$
+            \begin{itemize}
+              \item Mag. unitary sym. subgroup: $\symcal{H} = \symcal{C}_{3h}$
+              \item Spatial pseudo-sym. group: $\symcal{G} = \symcal{D}_{3h}$
+            \end{itemize}
+          \end{itemize}
+        \end{column}
+      \end{columns}
+
+      \vspace{6	pt}
+
+      \begin{columns}[T]
+        \begin{column}{.40\textwidth}
+          \begin{itemize}
+            \item<3-> Ground term: \textcolor{red}{$E'(\symcal{D}_{3h})$}
+          \end{itemize}
+        \end{column}
+        \begin{column}{.50\textwidth}
+          \begin{itemize}
+            \item<3-> Ground term: \textcolor{blue}{$\Gamma'(\symcal{C}_{3h})$} where
+            \begin{equation*}
+              \textcolor{red}{E'(\symcal{D}_{3h})} \to \textcolor{blue}{\Gamma'(\symcal{C}_{3h})} \oplus \bar{\Gamma}'(\symcal{C}_{3h})
+            \end{equation*}
+            \item<4-> Ground current: $\textcolor{blue}{A'(\symcal{C}_{3h})} \leftarrow \textcolor{red}{A_2'(\symcal{D}_{3h})}$
+          \end{itemize}
+        \end{column}
+      \end{columns}
+    \end{itemize}
+    \footlessfullcite{article:Keith1993}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Ground \glsfmtshort{acr:uhf} current density in \ce{H3} radical}
+    \begin{itemize}
+      \item<1-> \glsxtrshort*{acr:uhf}, 6-31G*, $M_S = -\nicefrac{1}{2}$
+    \end{itemize}
+    \only<1>{
+      \begin{figure}
+        \centering
+        \animategraphics[controls, poster=first, scale=.7]{6}{./cursym/data/h3/h3.uhf.current.noint}{}{}
+      \end{figure}
+    }
+    \only<2>{
+      \begin{figure}
+        \centering
+        \animategraphics[controls, poster=first, scale=.7]{6}{./cursym/data/h3/h3.uhf.current.int}{}{}
+      \end{figure}
+    }
+  \end{frame}
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Current density symmetry breaking}
+    \begin{itemize}
+      \only<1-2>{
+        \item<1-> The ground \glsxtrshort*{acr:uhf} current density in equilateral \ce{H3} radical displays \emphit{Magenta}{symmetry breaking} at all $\lvert \gls*{mag:vec} \rvert/B_0 \in \interval[open left]{0}{1}$.\\[6pt]
+        Current density symmetry analysis gives
+        \begin{equation*}
+          \textcolor{blue}{A' \oplus \Gamma' \oplus \bar{\Gamma}' (\symcal{C}_{3h})} \leftarrow \textcolor{red}{A_2' \oplus E' (\symcal{D}_{3h})}.
+        \end{equation*}
+
+        \item<2-> This suggests that the underlying \glsxtrshort*{acr:uhf} density and wavefunction are also symmetry-broken.
+      }
+
+      \only<3>{
+        \item<3-> Consider the \glsxtrshort*{acr:uhf} wavefunction at $\lvert \gls*{mag:vec} \rvert = 0$:
+        \begin{itemize}
+          \item Overall symmetry: $A'_1 \oplus E' (\symcal{D}_{3h})$ $\Rightarrow$ \emphit{Magenta}{symmetry-broken}
+          \item Occupied molecular-orbital isosurfaces at isovalues $\pm 0.1$:
+          \begin{figure}
+            \centering
+            \captionsetup[subfigure]{labelformat=empty}
+            \begin{subfigure}{.40\textwidth}
+              \centering
+              \phantom{\includegraphics{./cursym/data/h3/b2_1200ppi.png}}
+            \end{subfigure}
+            \unskip\ \vrule\
+            \begin{subfigure}{.40\textwidth}
+              \centering
+              \includegraphics{./cursym/data/h3/b2_1200ppi.png}
+              \subcaption{$\beta_2$, $A'_1 \oplus E' (\symcal{D}_{3h})$}
+            \end{subfigure}
+
+            \begin{subfigure}{.40\textwidth}
+              \centering
+              \includegraphics{./cursym/data/h3/a1_1200ppi.png}
+              \subcaption{$\alpha_1$, $A'_1 \oplus E' (\symcal{D}_{3h})$}
+            \end{subfigure}
+            \unskip\ \vrule\
+            \begin{subfigure}{.40\textwidth}
+              \centering
+              \includegraphics{./cursym/data/h3/b1_1200ppi.png}
+              \subcaption{$\beta_1$, $A'_1 \oplus E' (\symcal{D}_{3h})$}
+            \end{subfigure}
+          \end{figure}
+        \end{itemize}
+      }
+
+      \only<4->{
+        \item<4-> This \glsxtrshort*{acr:uhf} symmetry breaking \emphit{Magenta}{persists} at finite field strengths:
+        \begin{figure}
+          \centering
+          \input{cursym/tikz/h3.t60.000.tikz.tex}
+        \end{figure}
+      }
+    \end{itemize}
+  \end{frame}
+
+
+  \subsection{\ce{H6} octahedron}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Degenerate current density symmetry}
+    \begin{itemize}
+      \item<1-> Consider an octahedral \ce{H6} cluster.
+      \begin{figure}
+        \centering
+        \scalebox{.8}{\input{./cursym/tikz/h6geom.tikz.tex}}
+      \end{figure}
+
+      \item<1-> Back-of-the-envelope properties for $\gls*{mag:vec}$ along $z$:
+      \begin{columns}[T]
+        \begin{column}{.40\textwidth}
+          \emphbf{red}{Zero field}
+          \begin{itemize}
+            \item<1-> Spatial sym. group: $\symcal{G} = \textcolor{red}{\symcal{O}_{h}}$
+          \end{itemize}
+        \end{column}
+        \begin{column}{.50\textwidth}
+          \emphbf{blue}{Finite fields}
+          \begin{itemize}
+            \item<1-> Magnetic sym. group: $\symcal{M} = \textcolor{blue}{\symcal{D}_{4h}(\symcal{C}_{4h})}$
+            \begin{itemize}
+              \item Mag. unitary sym. subgroup: $\symcal{H} = \symcal{C}_{4h}$
+              \item Spatial pseudo-sym. group: $\symcal{G} = \symcal{O}_{h}$
+            \end{itemize}
+          \end{itemize}
+        \end{column}
+      \end{columns}
+
+      \vspace{6pt}
+
+      \begin{columns}[T]
+        \begin{column}{.40\textwidth}
+        \end{column}
+        \begin{column}{.50\textwidth}
+          \begin{itemize}
+            \item<1-> Ground current: $\textcolor{blue}{A_g(\symcal{C}_{4h})} \leftarrow \textcolor{red}{T_{1g}(\symcal{O}_{h})}$
+          \end{itemize}
+        \end{column}
+      \end{columns}
+    \end{itemize}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Principal-field current density in \ce{H6} cluster}
+    \begin{columns}
+      \begin{column}{.40\textwidth}
+        \begin{itemize}
+          \setlength\itemsep{1.2em}
+          \item<1-> \glsxtrshort*{acr:uhf}, 6-31G*, $M_S = 0$
+          \item<1-> $\gls*{mag:vec}$ along $z$-direction
+          \item<1-> $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ symmetry: $\textcolor{blue}{A_g(\symcal{C}_{4h})} \leftarrow \textcolor{red}{T_{1g}(\symcal{O}_{h})}$
+          \item<1-> \glsxtrshort*{acr:uhf} symmetry: $B_g(\symcal{C}_{4h})$
+        \end{itemize}
+      \end{column}
+
+      \begin{column}{.55\textwidth}
+        \begin{figure}
+          \centering
+          \includegraphics[trim=600 50 500 150, clip, width=\textwidth]{./cursym/data/h6/bz.png}
+        \end{figure}
+      \end{column}
+    \end{columns}
+  \end{frame}
+
+
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%
+  \begin{frame}{Non-principal-field current density in \ce{H6} cluster}
+    \begin{columns}
+      \begin{column}{.40\textwidth}
+        \begin{itemize}
+          \setlength\itemsep{1.2em}
+          \item<1-> \glsxtrshort*{acr:uhf}, 6-31G*, $M_S = 0$
+          \item<1-> $\gls*{mag:vec}$ along $(1, 1, 1)^{\T}$ direction
+          \item<1-> $\gls*{mag:jphys}(\gls*{bas:spatialcoord})$ symmetry: $\textcolor{blue}{A_g(\symcal{S}_{6})} \leftarrow \textcolor{red}{\underline{T_{1g}} \oplus A_{2g}(\symcal{O}_{h})}$
+          \item<1-> \glsxtrshort*{acr:uhf} symmetry: $\bar{\Gamma}_g(\symcal{S}_{6})$
+        \end{itemize}
+      \end{column}
+
+      \begin{column}{.55\textwidth}
+        \begin{figure}
+          \centering
+          \includegraphics[trim=600 50 500 150, clip, width=\textwidth]{./cursym/data/h6/bxyz.png}
+        \end{figure}
+      \end{column}
+    \end{columns}
+  \end{frame}

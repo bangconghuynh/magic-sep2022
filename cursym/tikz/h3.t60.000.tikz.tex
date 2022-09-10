@@ -1,0 +1,164 @@
+\pgfplotstableread[col sep=comma]{cursym/data/h3/h3.t60.000.csv}\data
+
+\begin{tikzpicture}[%
+]
+  % Main plot
+  \begin{groupplot}[
+    % =============
+    % Group configs
+    % =============
+    group style={
+      group size=1 by 1,
+      xlabels at=edge bottom,
+      xticklabels at=edge bottom,
+      ylabels at=edge left,
+      yticklabels at=edge left,
+      vertical sep=1.5cm,
+      horizontal sep=1.8cm,
+    },
+    % =================
+    % Groupplot general
+    % =================
+    width=.5\linewidth,
+    scale only axis=true,
+    cycle list name=coloronly,
+    unbounded coords=jump,
+    % ==================
+    % Group title format
+    % ==================
+    title style={yshift=-1.5ex, font={\footnotesize}},
+    % =================
+    % Group axis format
+    % =================
+    % -----------------
+    % Group axis scales
+    % -----------------
+    xmin=0, xmax=1,
+    ymin=-1.725, ymax=-1.45,
+    % -----------------
+    % Group axis labels
+    % -----------------
+    xlabel={$\lvert \gls*{mag:vec} \rvert / B_0$},
+    label style={font=\scriptsize},
+    xlabel style={align=center},
+    every axis y label/.append style={at={(0, 0.5)}, yshift=2.5em},
+    % -----------------
+    % Group tick labels
+    % -----------------
+    tick label style={font=\scriptsize},
+    x tick label style=
+    {
+      /pgf/number format/.cd,
+      fixed,
+      fixed zerofill,
+      precision=1,
+      /tikz/.cd
+    },
+%    every y tick scale label/.style={%
+%      at={(yticklabel cs:1)},%
+%      anchor=east,%
+%      inner sep=1pt%
+%    },
+    % ------------------
+    % Group tick configs
+    % ------------------
+    xtick pos=left,
+    xtick align=outside,
+    minor x tick num=1,
+    xtick distance=0.2,
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  ]
+    % ==
+    % ==
+    % Wc
+    % ==
+    % ==
+    % ------
+    % Carbon
+    % ------
+    \nextgroupplot[
+      % ===============
+      % Subplot general
+      % ===============
+      align=center,
+      ylabel={UHF energy / \si{\hartree}},
+      height=.6\textheight,
+      % ====================
+      % Subplot title format
+      % ====================
+      % ===================
+      % Subplot axis format
+      % ===================
+      % -------------------
+      % Subplot axis scales
+      % -------------------
+      % -------------------
+      % Subplot axis labels
+      % -------------------
+      y tick label style=
+      {
+        /pgf/number format/.cd,
+        fixed,
+        fixed zerofill,
+        precision=2,
+        /tikz/.cd
+      },
+      % -------------------
+      % Subplot tick labels
+      % -------------------
+      % --------------------
+      % Subplot tick configs
+      % --------------------
+      ytick align=outside,
+      ytick pos=left,
+      minor y tick num=1,
+%      ytick distance=0.05,
+      % ===============
+      % Subplot legends
+      % ===============
+      legend pos=north east,
+      legend style={
+        legend cell align=right,
+        legend style={font=\scriptsize},
+      },
+      % ===================
+      % Subplot annotations
+      % ===================
+      after end axis/.code={%
+        % ============
+        % Point groups
+        % ============
+        \draw[<-, very thin] (rel axis cs:0, 1.015) -- ++(axis direction cs:0, 0.01) node[anchor=south, scale=0.5, inner sep=2pt] {$\symcal{D}_{3h}$};
+        \node[anchor=south, scale=0.5, inner sep=2pt] at (rel axis cs:0.5, 1.020) {$\symcal{C}_{3h}$};
+        % ===============
+        % Symmetry labels
+        % ===============
+        \pgfplotstablegetelem{0}{s0_sym0_energy}\of{\data}
+        \draw[very thin, ->] (axis cs:0, \pgfplotsretval) -- ++(axis direction cs:0.15, 0.01) node[anchor=west, scale=0.7, inner sep=2pt] {$A'_1 \oplus E' (\symcal{D}_{3h})$};
+        \pgfplotstablegetelem{5}{s0_sym0_energy}\of{\data}
+        \draw[very thin, ->] (axis cs:0.25, \pgfplotsretval) -- ++(axis direction cs:0.10, 0.025) node[anchor=south west, scale=0.7, inner sep=2pt] {$A' \oplus \Gamma' \oplus \bar{\Gamma}' (\symcal{C}_{3h})$};
+      },
+    ]
+      \addplot[%
+        DarkGreen,%
+        smooth,
+        very thick,%
+        mark=none,%
+      ] table[x={bx}, y={s0_sym0_energy}]{\data};
+      \addlegendentry{$\gls*{wf:uhf}$}
+      \addplot[%
+        blue,%
+        only marks,%
+        mark=x,%
+        mark size=2pt,%
+      ] table[x={bx}, y={s0_sym1_energy}]{\data};
+      \addlegendentry{$\hat{C}_3 \gls*{wf:uhf}$}
+      \addplot[%
+        red,%
+        only marks,%
+        mark=o,%
+        mark size=1.5pt,%
+      ] table[x={bx}, y={s0_sym2_energy}]{\data};
+      \addlegendentry{$\hat{C}_3^{-1} \gls*{wf:uhf}$}
+  \end{groupplot}
+\end{tikzpicture}
